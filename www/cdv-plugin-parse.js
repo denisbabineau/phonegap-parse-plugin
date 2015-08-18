@@ -81,7 +81,6 @@ var parsePlugin = {
         );
     },
 
-    // iOS only
     trackEvent: function(name, dimensions, successCallback, errorCallback) {
         cordova.exec(
             successCallback,

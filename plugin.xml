@@ -112,7 +112,6 @@
         <framework src="src/ios/Frameworks/ParseCrashReporting.framework" custom="true" />
     </platform>
 
-
 	 <!-- wp8 -->
     <platform name="wp8">
         <config-file target="config.xml" parent="/*">
@@ -129,6 +128,19 @@
 		<config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
 			<Capability Name="ID_CAP_PUSH_NOTIFICATION" />
 		</config-file>
+    </platform>
+
+    <!-- browser -->
+    <platform name="browser">
+        <config-file target="config.xml" parent="/*">
+            <feature name="ParsePlugin">
+                <param name="browser-package" value="ParsePlugin" />
+            </feature>
+        </config-file>
+
+        <js-module src="src/browser/ParsePluginProxy.js" name="ParsePluginProxy">
+            <runs />
+        </js-module>
     </platform>
 
 </plugin>
