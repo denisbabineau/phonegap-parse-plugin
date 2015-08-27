@@ -137,6 +137,17 @@ public class ParsePlugin extends CordovaPlugin {
     private void initialize(final CallbackContext callbackContext, final JSONArray args) {
         cordova.getThreadPool().execute(new Runnable() {
             public void run() {
+                if ((args != null) && (args.length() > 0)) {
+                    try {
+                        JSONObject options = args.getJSONObject(0);
+                        if (options.has("appJsVersion")) {
+                            String jsVersion = options.getString("appJsVersion");
+                            ParseInstallation.getCurrentInstallation().put("appJsVersion", jsVersion);
+                        }
+                    } catch (JSONException e) {
+                        // Ignored
+                    }
+                }
                 ParseInstallation.getCurrentInstallation().saveInBackground();
                 ParseAnalytics.trackAppOpenedInBackground(cordova.getActivity().getIntent());
                 callbackContext.success(sKeys);

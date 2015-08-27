@@ -79,6 +79,15 @@ static NSString * const PPHash = @"push_hash";
         }
 
         PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+
+        NSDictionary * args = [command.arguments objectAtIndex:0];
+        if (args) {
+            NSString * jsVersion = [args objectForKey:@"appJsVersion"];
+            if (jsVersion) {
+                [currentInstallation setObject:jsVersion forKey:@"appJsVersion"];
+            }
+        }
+
         NSError *error = nil;
         [currentInstallation save:&error];
         if (error != nil) {

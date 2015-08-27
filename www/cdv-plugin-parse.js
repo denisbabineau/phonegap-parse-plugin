@@ -10,13 +10,13 @@ var parsePlugin = {
         );
     },
 
-    initialize: function(appId, clientKey, successCallback, errorCallback) {
+    initialize: function(options, successCallback, errorCallback) {
         cordova.exec(
             successCallback,
             errorCallback,
             'ParsePlugin',
             'initialize',
-            [appId, clientKey]
+            [options]
         );
     },
 
