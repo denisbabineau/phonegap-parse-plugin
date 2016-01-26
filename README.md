@@ -22,8 +22,8 @@ Installation
 Pick one of these two commands:
 
 ```
-phonegap local plugin add https://github.com/grrrian/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
-cordova plugin add https://github.com/grrrian/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY
+phonegap local plugin add https://github.com/denisbabineau/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY --variable JS_KEY=PARSE_JS_KEY
+cordova plugin add https://github.com/denisbabineau/phonegap-parse-plugin --variable APP_ID=PARSE_APP_ID --variable CLIENT_KEY=PARSE_CLIENT_KEY --variable JS_KEY=PARSE_JS_KEY
 ```
 
 Initial Setup
@@ -31,12 +31,12 @@ Initial Setup
 
 A parsePlugin variable is defined globally (e.g. $window.parsePlugin).
 
-Once the device is ready (see: http://docs.phonegap.com/en/4.0.0/cordova_events_events.md.html#deviceready), call ```parsePlugin.initialize()```. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
+Once the device is ready (see: http://docs.phonegap.com/en/4.0.0/cordova_events_events.md.html#deviceready), call ```parsePlugin.initialize()```, initialize takes a json object as arg, optional "appJsVersion" option to persist in installation object (used to represent version of js bundle versus native app), the plugin will use the app id and key provided during it's installation. This will register the device with Parse, you should see this reflected in your Parse control panel. After this runs you probably want to save the installationID somewhere, and perhaps subscribe the user to a few channels. Here is a contrived example.
 
 (Note: When using Windows Phone, clientKey must be your .NET client key from Parse. So you will need to set this based on platform i.e. if( window.device.platform == "Win32NT"))
 
 ```
-parsePlugin.initialize(appId, clientKey, function() {
+parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 
 	parsePlugin.subscribe('SampleChannel', function() {
 
@@ -70,7 +70,7 @@ Alternatively, we can store the user in the installation table and use queries t
 
 ```
 // on sign in, add the user pointer to the Installation
-parsePlugin.initialize(appId, clientKey, function() {
+parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 
   parsePlugin.getInstallationObjectId( function(id) {
     // Success! You can now use Parse REST API to modify the Installation
@@ -109,7 +109,7 @@ Usage
 -----
 ```
 <script type="text/javascript">
-	parsePlugin.initialize(appId, clientKey, function() {
+	parsePlugin.initialize({appJsVersion: jsBundleVersion}, function() {
 		alert('success');
 	}, function(e) {
 		alert('error');
